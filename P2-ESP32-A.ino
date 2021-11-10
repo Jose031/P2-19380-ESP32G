@@ -65,3 +65,34 @@ void loop()
 //**********************************************************************************************************************
 void BPM(void)
 void leerSensor() {
+  //Función que permite leer BPM consecuitvamente, además permite determinar el BPM y el promedio de BPM. 
+   long irValue = particleSensor.getIR();
+    if (checkForBeat(irValue) == true)
+    {
+      //Leer latido del corazón. 
+      long delta = millis() - lastBeat;
+      lastBeat = millis();
+
+      beatsPerMinute = 60 / (delta / 1000.0);
+
+      if (beatsPerMinute < 255 && beatsPerMinute > 20)
+      {
+        rates[rateSpot++] = (byte)beatsPerMinute; //Almacenar el valor en la matriz
+        rateSpot %= RATE_SIZE; //Wrap variable
+
+        //Tomar el promedio del BPM
+        beatAvg = 0;
+        for (byte x = 0 ; x < RATE_SIZE ; x++)
+          beatAvg += rates[x];
+        beatAvg /= RATE_SIZE;
+      }
+    }
+
+    Serial.print("Promedio de BPM: ");
+    Serial.print(beatAvg);
+
+   // Condición que identific
+    if (irValue < 50000)
+    Serial.print(" Coloque su dedo índice");
+    Serial.println();
+}
