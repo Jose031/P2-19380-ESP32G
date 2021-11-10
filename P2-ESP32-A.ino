@@ -59,6 +59,9 @@ void setup()
 // LOOP
 //**********************************************************************************************************************
 void loop()
+{
+  leerSensor(); // Llamado de función para que el sensor este leyendo el valor BPM  todo el tiempo en el ESP32.
+  BPM(); //Llamdo de función encargada de mandar el ultimo dato leído por el ESP32 a la Tiva C.
 }
 //**********************************************************************************************************************
 // Fuinciones
