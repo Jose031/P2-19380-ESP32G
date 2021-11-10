@@ -20,6 +20,17 @@ MAX30105 particleSensor;
 //**********************************************************************************************************************
 // Variables Globales
 //**********************************************************************************************************************
+
+String estadoBoton = ""; // Variable con la cual se recibe la instrucción por parte de la tiva c para enviar el valor BPM
+int estado = 0;
+const byte RATE_SIZE = 4; //Increase this for more averaging. 4 is good.
+byte rates[RATE_SIZE]; //Array of heart rates
+byte rateSpot = 0;
+long lastBeat = 0; //Time at which the last beat occurred
+
+float beatsPerMinute;
+int beatAvg;
+
 //**********************************************************************************************************************
 // Configuracion
 //**********************************************************************************************************************
