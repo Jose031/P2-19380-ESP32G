@@ -64,6 +64,19 @@ void loop()
 // Fuinciones
 //**********************************************************************************************************************
 void BPM(void)
+{
+  if (Serial2.available() > 0) // Condición que permite verficar si hay bytes disponibles en el buffer de registro.
+  {
+    estadoBoton = Serial2.readStringUntil('\n'); //Lectura de la instrucción enviada por la Tiva C.
+    estado = estadoBoton.toInt(); //Conversión  de la instrcción a un entero. 
+  }
+
+  if ((estado) == 1) // Condición que al identificar la instrucción de la Tiva C envía el ultimo valor leido por el sensor de BPM. 
+  {
+    Serial2.println(beatAvg); // El utlimo valor de BPM es enviado por el módulo UART 2 a la Tiva C.
+    estado = 0; //Se hace cero el estado para que se envie solo se envíe un valor de BPM por cada instrucción enviada por la Tiva C. 
+  }
+}
 void leerSensor() {
   //Función que permite leer BPM consecuitvamente, además permite determinar el BPM y el promedio de BPM. 
    long irValue = particleSensor.getIR();
